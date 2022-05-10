@@ -28,9 +28,13 @@ var isSupported = (function() {
   return document.querySelector && window.URL && window.Worker;
 })();
 
+
+
 function isReady() {
   return !running && isWorkerLoaded && sampleImageData && sampleVideoData;
 }
+
+
 
 function startRunning() {
   document.querySelector("#image-loader").style.visibility = "visible";
@@ -38,6 +42,9 @@ function startRunning() {
   filesElement.innerHTML = "";
   running = true;
 }
+
+
+
 function stopRunning() {
   document.querySelector("#image-loader").style.visibility = "hidden";
   running = false;
