@@ -157,8 +157,60 @@ function retreiveVideo(blob) {
 console.log('Loading worker');
 initWorker();
 
+function initWorker() {
+  
+  
+  worker = new Worker("worker-asm.js");
+    
+  worker.onmessage = function (event) {
+      
+      const message = event.data;
+      
+      console.log('Received message:',message.type)
+      
+      
+      if (message.type == "ready") {
+        
+        console.log('Worker is ready');
+        
+        isWorkerLoaded = true;
+                
+      }
+      
+      if (message.type == "done") {
+      
+          //stopRunning();
+          console.log('worker has finished')
+          
+          var buffers = message.data;
+          
+          if (buffers.length) {
+            outputElement.className = "closed";
+          }
+          
+          buffers.forEach(function(file) {
+            
+            filesElement.appendChild(getDownloadLink(file.data, file.name));
+            
+          });
+      }
+      
+      if (message.type == "start") 
+        console.log("Worker has received command\n");
+      
+      if (message.type == "stdout") 
+        console.log(message.data + "\n");
+    }
+    
+   //Create a mutex wait on load: 
+   workerInitPromise = new Promise(resolve => {
+      if(isWorkerLoaded) resolve();
+    });
 
-let workerInitPromise;
+
+  }
+
+let workerInitPromise=null;
 
 async function runCommand(text) {
   
@@ -264,60 +316,7 @@ function getDownloadLink(fileData, fileName) {
 
 
 
-function initWorker() {
-  
-  
-  worker = new Worker("worker-asm.js");
-    
-  worker.onmessage = function (event) {
-      
-      const message = event.data;
-      
-      console.log('Received message:',message.type)
-      
-      
-      if (message.type == "ready") {
-        
-        console.log('Worker is ready');
-        
-        isWorkerLoaded = true;
-        
-        resolve();
-        
-      }
-      
-      if (message.type == "done") {
-      
-          //stopRunning();
-          console.log('worker has finished')
-          
-          var buffers = message.data;
-          
-          if (buffers.length) {
-            outputElement.className = "closed";
-          }
-          
-          buffers.forEach(function(file) {
-            
-            filesElement.appendChild(getDownloadLink(file.data, file.name));
-            
-          });
-      }
-      
-      if (message.type == "start") 
-        console.log("Worker has received command\n");
-      
-      if (message.type == "stdout") 
-        console.log(message.data + "\n");
-    }
-    
-   //Create a mutex wait on load: 
-   workerInitPromise = new Promise(resolve => {
-      if(isWorkerLoaded) resolve();
-    });
 
-
-  }
   
 
 
