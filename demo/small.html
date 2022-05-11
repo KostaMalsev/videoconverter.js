@@ -268,10 +268,8 @@ function initWorker() {
   
   
   worker = new Worker("worker-asm.js");
-  
-  //workerInitPromise = new Promise(resolve => {
-  
-    worker.onmessage = function (event) {
+    
+  worker.onmessage = function (event) {
       
       const message = event.data;
       
@@ -312,28 +310,24 @@ function initWorker() {
       if (message.type == "stdout") 
         console.log(message.data + "\n");
     }
+    
+   //Create a mutex wait on load: 
+   workerInitPromise = new Promise(resolve => {
+      if(isWorkerLoaded) resolve();
+    });
+
 
   }
   
- // });
+
 
   
   
-  /*worker.onmessage = function (event) {
-    
-    const message = event.data;
-      
-    if (message.type == "stdout") {
-      
-      //outputElement.textContent += message.data + "\n";
-    
-    } 
-  };
-}
+  
 
 
 
-
+/*
 document.addEventListener("DOMContentLoaded", function() {
 
   //initWorker();
@@ -362,7 +356,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
 });
-
+*/
 
 /*
 function retrieveSampleImage() {
