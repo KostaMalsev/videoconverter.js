@@ -107,7 +107,7 @@ function readVideo(event) {
         videoSrc.src = e.target.result
         videoTag.load();
         
-        sampleVideoData = new Uint8Array(event.target.result);
+        sampleVideoData = new Uint8Array(e.target.result);
         
       }.bind(this)
   
