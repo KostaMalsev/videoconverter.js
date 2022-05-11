@@ -168,6 +168,7 @@ function initWorker() {
   
   
   worker = new Worker("worker-asm.js");
+  button.classList.add("my-class");
   
   worker.onmessage = function (event) {
       
