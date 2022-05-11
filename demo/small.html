@@ -91,12 +91,13 @@ window.addEventListener('load', async function() {
 
           img.src = URL.createObjectURL(this.files[0]); // set src to blob url
           
+          
+          //Generate blob from the image url:
           let blob = await fetch(img.src).then(r => r.blob());
 
-          console.log(blob)
+          //Push the data to array format:
           retreiveImage(blob);
           
-          console.log(sampleImageData)
       }
   });
   
@@ -130,8 +131,10 @@ function retreiveImage(blob) {
 
   var fileReader = new FileReader();
   
+  
   fileReader.onload = function(event) {
     sampleImageData = event.target.result;
+    console.log('ImageData:',sampleImageData);
   };
   
   fileReader.readAsArrayBuffer(blob);
