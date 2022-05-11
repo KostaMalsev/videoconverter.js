@@ -280,6 +280,11 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   background: rgba(241,241,242,0.05);
 }
 
+.button.disabled{
+ pointer-events: none;
+}
+
+
 .searchbar {
   background-color: #323739;
   padding: 10px 16px;
