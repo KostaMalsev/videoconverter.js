@@ -54,7 +54,8 @@ var isSupported = (function() {
 
 
 function isReady() {
-  return !running && isWorkerLoaded && sampleImageData && sampleVideoData;
+  return !running;
+  //return !running && isWorkerLoaded && sampleImageData && sampleVideoData;
 }
 
 
