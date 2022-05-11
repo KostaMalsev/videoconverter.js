@@ -209,7 +209,7 @@ function initWorker() {
           
           var blob_ = new Blob([buffers[0].data]);
           
-          let video_ = document.quarySelector('#video-tag');
+          let video_ = document.querySelector('#video-tag');
           
           //Play the video:
           video_.src({type:'video/mp4', src: URL.createObjectURL(blob_)});
