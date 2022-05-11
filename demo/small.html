@@ -101,22 +101,27 @@ window.addEventListener('load', async function() {
       }
   });
   
+  
+  
   const videoSrc = document.querySelector("#video-source");
   const videoTag = document.querySelector("#video-tag");
   const inputTag = document.querySelector("#input-tag");
+  
+  
   
   inputTag.addEventListener('change',  readVideo)
 
 
 
-
+  
   function readVideo(event) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
   
       reader.onload = function(e) {
-        videoSrc.src = e.target.result
-        videoTag.load()
+        videoSrc.src = e.target.result;
+        videoTag.load();
+        
       }.bind(this)
   
       reader.readAsDataURL(event.target.files[0]);
@@ -126,11 +131,10 @@ window.addEventListener('load', async function() {
 });
 
 
-
+//Function pushes blob to arrayBuffer:
 function retreiveImage(blob) {
 
   var fileReader = new FileReader();
-  
   
   fileReader.onload = function(event) {
     sampleImageData = event.target.result;
