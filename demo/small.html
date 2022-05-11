@@ -155,12 +155,21 @@ function retreiveVideo(blob) {
 
 
 console.log('Loading worker');
+
 initWorker();
+
+
 
 function initWorker() {
   
   
+    
   worker = new Worker("worker-asm.js");
+  
+  //Create a mutex wait on load: 
+   workerInitPromise = new Promise(resolve => {
+      if(isWorkerLoaded) resolve();
+    });
     
   worker.onmessage = function (event) {
       
@@ -201,14 +210,9 @@ function initWorker() {
       if (message.type == "stdout") 
         console.log(message.data + "\n");
     }
-    
-   //Create a mutex wait on load: 
-   workerInitPromise = new Promise(resolve => {
-      if(isWorkerLoaded) resolve();
-    });
-
 
   }
+
 
 let workerInitPromise=null;
 
