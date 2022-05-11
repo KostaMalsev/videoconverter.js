@@ -277,6 +277,7 @@ function initWorker() {
       
       console.log('Received message:',message.type)
       
+      
       if (message.type == "ready") {
         
         console.log('Worker is ready');
@@ -304,6 +305,11 @@ function initWorker() {
             
           });
       }
+      
+      if (message.type == "start") 
+        console.log("Worker has received command\n");
+    
+    }
       
     }
     
