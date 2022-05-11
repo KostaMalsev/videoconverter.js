@@ -58,6 +58,28 @@ function isReady() {
 
 
 
+
+
+
+
+function retrieveImage(url) {
+  var oReq = new XMLHttpRequest();
+  oReq.open("GET", url, true);
+  oReq.responseType = "arraybuffer";
+
+  oReq.onload = function (oEvent) {
+    var arrayBuffer = oReq.response;
+    if (arrayBuffer) {
+      sampleImageData = new Uint8Array(arrayBuffer);
+    }
+  };
+
+  oReq.send(null);
+}
+
+
+
+
 function startRunning() {
   //document.querySelector("#image-loader").style.visibility = "visible";
   //outputElement.className = "";
@@ -208,9 +230,9 @@ function initWorker() {
 
 document.addEventListener("DOMContentLoaded", function() {
 
-  initWorker();
-  retrieveSampleVideo();
-  retrieveSampleImage();
+  //initWorker();
+  //retrieveSampleVideo();
+  //retrieveSampleImage();
 
   var inputElement = document.querySelector("#input");
   outputElement = document.querySelector("#output");
