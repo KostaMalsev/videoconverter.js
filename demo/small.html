@@ -209,6 +209,7 @@ function initWorker() {
   }
 
 
+let workerInitPromise=null;
 
 async function runCommand(text) {
 
@@ -217,7 +218,7 @@ async function runCommand(text) {
   if (workerInitPromise) {
 
     console.log('Before init');
-    let workerInitPromise=null;
+    
 
     initWorker();
 
