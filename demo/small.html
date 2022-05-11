@@ -205,11 +205,14 @@ function initWorker() {
           }*/
           button.innerHTML = 'Press to Convert';
           
-          console.log(buffers[0].data)
-          var blob = new Blob([buffers[0].data]);
+          //console.log(buffers[0].data)
+          
+          var blob_ = new Blob([buffers[0].data]);
           
           let video_ = document.quarySelector('#video-tag');
           
+          //Play the video:
+          video_.src({type:'video/mp4', src: URL.createObjectURL(blob_)});
           
           buffers.forEach(function(file) {
             
