@@ -116,6 +116,18 @@ window.addEventListener('load', function() {
 
 
 
+function retreiveImage(blob) {
+
+  var fileReader = new FileReader();
+  
+  fileReader.onload = function(event) {
+    sampleImageData = event.target.result;
+  };
+  
+  fileReader.readAsArrayBuffer(blob);
+  
+}
+
 
 
 function retrieveImage(url) {
@@ -219,6 +231,7 @@ function runCommand(text) {
           "data": sampleVideoData
         }
       ]
+      
     });
   }
 }
