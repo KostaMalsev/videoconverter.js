@@ -169,8 +169,6 @@ function initWorker() {
   
   worker = new Worker("worker-asm.js");
   
-  
-    
   worker.onmessage = function (event) {
       
       const message = event.data;
