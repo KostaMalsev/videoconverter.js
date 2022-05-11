@@ -222,6 +222,7 @@ function initWorker() {
             filesElement.appendChild(getDownloadLink(file.data, file.name));
             
           });
+          stopRunning();
       }
       
       if (message.type == "start") 
@@ -287,6 +288,7 @@ function startRunning() {
 
 function stopRunning() {
   //document.querySelector("#image-loader").style.visibility = "hidden";
+  button.innerHTML = 'Press to Convert';
   running = false;
 }
 
