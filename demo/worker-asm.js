@@ -1,4 +1,6 @@
 
+console.log('loading all-codecs.js');
+
 importScripts('../build/ffmpeg-all-codecs.js');
 
 var now = Date.now;
