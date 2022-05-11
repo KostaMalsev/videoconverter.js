@@ -1,15 +1,19 @@
 
-importScripts('../build/ffmpeg.js');
-
-
-var now = Date.now;
-
 function print(text) {
   postMessage({
     'type' : 'stdout',
     'data' : text
   });
 }
+
+print('message: Initial')
+
+importScripts('../build/ffmpeg.js');
+
+
+var now = Date.now;
+
+
 
 onmessage = function(event) {
 
