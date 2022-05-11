@@ -63,6 +63,8 @@ function isReady() {
 
 document.querySelector('#run').addEventListener('click',runCommand)
 
+
+
 //Image loader:
 window.addEventListener('load', async function() {
   
@@ -103,7 +105,10 @@ function readVideo(event) {
   
       reader.onload = function(e) {
         videoSrc.src = e.target.result
-        videoTag.load()
+        videoTag.load();
+        
+        sampleVideoData = new Uint8Array(event.target.result);
+        
       }.bind(this)
   
       reader.readAsDataURL(event.target.files[0]);
@@ -126,8 +131,10 @@ function retreiveImage(blob) {
   
 }
 
+
+
 //Push blob to arrayBuffer of video
-function retreiveVideo(blob) {
+/*function retreiveVideo(blob) {
 
   var fileReader = new FileReader();
   
@@ -139,7 +146,7 @@ function retreiveVideo(blob) {
   
   fileReader.readAsArrayBuffer(blob);
   
-}
+}*/
 
 
 
@@ -197,6 +204,12 @@ function initWorker() {
             outputElement.className = "closed";
           }*/
           button.innerHTML = 'Press to Convert';
+          
+          console.log(buffers[0].data)
+          var blob = new Blob([buffers[0].data]);
+          
+          let video_ = document.quarySelector('#video-tag');
+          
           
           buffers.forEach(function(file) {
             
