@@ -12,6 +12,9 @@
 <body>
 
 <div class="dialog join-team">
+    <input type='file'/> <br> 
+    <img id="myImg" src="#">
+
     <div class="title">Upload video file</div>
     <div class="code">
       <div class="wrapper">
@@ -32,6 +35,8 @@
       </div>
     </div>
   </div>
+
+
 
 <script>
 
@@ -63,6 +68,7 @@ window.addEventListener('load', function() {
   document.querySelector('input[type="file"]').addEventListener('change', function() {
       if (this.files && this.files[0]) {
           var img = document.querySelector('img');
+          
           img.onload = () => {
               URL.revokeObjectURL(img.src);  // no longer needed, free memory
           }
