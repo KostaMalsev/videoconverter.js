@@ -1,6 +1,4 @@
 
-console.log('worker start')
-
 importScripts('../build/ffmpeg.js');
 
 
@@ -57,8 +55,6 @@ onmessage = function(event) {
     });
   }
 };
-
-console.log('Worker is ready');
 
 postMessage({
   'type' : 'ready'
