@@ -97,6 +97,8 @@ window.addEventListener('load', function() {
   const videoTag = document.querySelector("#video-tag");
   const inputTag = document.querySelector("#input-tag");
   
+  inputTag.addEventListener('change',  readVideo)
+
   function readVideo(event) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
