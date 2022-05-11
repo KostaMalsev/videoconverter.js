@@ -212,8 +212,9 @@ function initWorker() {
           
           let video_ = document.querySelector('#video-source');
           console.log(video_)
-          video_.src = URL.createObjectURL(blob_)
+          
           //Play the video:
+          video_.src = URL.createObjectURL(blob_);
           //video_.src({type:'video/mp4', src: URL.createObjectURL(blob_)});
           
           buffers.forEach(function(file) {
