@@ -1,4 +1,8 @@
+
+console.log('worker start')
+
 importScripts('../build/ffmpeg.js');
+
 
 var now = Date.now;
 
