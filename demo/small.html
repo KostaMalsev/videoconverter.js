@@ -23,6 +23,7 @@
 
     <input type="file" accept="video/*" id="input-tag"/>
     <hr>
+    
     <video controls id="video-tag">
       <source id="video-source" src="splashVideo">
       Your browser does not support the video tag.
@@ -51,10 +52,10 @@ var isSupported = (function() {
 
 
 
+
 function isReady() {
   return !running && isWorkerLoaded && sampleImageData && sampleVideoData;
 }
-
 
 
 
@@ -94,6 +95,7 @@ window.addEventListener('load', async function() {
 
 //Read video from url
 function readVideo(event) {
+  
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
   
@@ -139,11 +141,10 @@ function retreiveVideo(blob) {
 
 
 
-
-
 let workerInitPromise=null;
 
 initWorker();
+
 
 
 
@@ -153,6 +154,7 @@ function initWorker() {
   worker = new Worker("worker-asm.js");
   button.classList.add("gray");
   button.classList.add("disabled");
+  button.innerHTML = 'Loading engine'
   
   
   worker.onmessage = function (event) {
@@ -168,6 +170,8 @@ function initWorker() {
         
         button.classList.remove("gray");
         button.classList.remove("disabled");
+        button.innerHTML = 'Press to Convert'
+
         
         isWorkerLoaded = true;
         //Create a mutex wait on load: 
@@ -206,53 +210,53 @@ function initWorker() {
 
 
 
-
 async function runCommand(text) {
-  
+
   text = '-t 5 -i input.webm -vf showinfo -strict -2 output.gif';
-  
+
   if (workerInitPromise) {
-    
+
     console.log('Before init');
 
     await workerInitPromise;
-    
+
     console.log('After init');
-    
-  }
-  
-  
-  if (isReady()) {
-    
-    startRunning();
-    
-    var args = parseArguments(text);
-    console.log(args);
-    
-    worker.postMessage({
-      type: "command",
-      arguments: args,
-      files: [
-        {
-          "name": "input.jpeg",
-          "data": sampleImageData
-        },
-        {
-          "name": "input.webm",
-          "data": sampleVideoData
-        }
-      ]
-      
-    });
+
+
+
+
+    if (isReady()) {
+
+      startRunning();
+
+      var args = parseArguments(text);
+
+      console.log(args);
+
+      worker.postMessage({
+        type: "command",
+        arguments: args,
+        files: [{
+            "name": "input.jpeg",
+            "data": sampleImageData
+          },
+          {
+            "name": "input.webm",
+            "data": sampleVideoData
+          }
+        ]
+
+      });
+    }
   }
 }
-
 
 
 function startRunning() {
   //document.querySelector("#image-loader").style.visibility = "visible";
   //outputElement.className = "";
   //filesElement.innerHTML = "";
+  button.innerHTML = 'Conversion in progress';
   running = true;
 }
 
