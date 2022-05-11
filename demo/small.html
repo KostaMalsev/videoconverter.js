@@ -217,39 +217,7 @@ function stopRunning() {
 }
 
 
-/*
-function retrieveSampleImage() {
-  var oReq = new XMLHttpRequest();
-  oReq.open("GET", "bigbuckbunny.jpg", true);
-  oReq.responseType = "arraybuffer";
 
-  oReq.onload = function (oEvent) {
-    var arrayBuffer = oReq.response;
-    if (arrayBuffer) {
-      sampleImageData = new Uint8Array(arrayBuffer);
-    }
-  };
-
-  oReq.send(null);
-}
-*/
-
-/*
-function retrieveSampleVideo() {
-  var oReq = new XMLHttpRequest();
-  oReq.open("GET", "bigbuckbunny.webm", true);
-  oReq.responseType = "arraybuffer";
-
-  oReq.onload = function (oEvent) {
-    var arrayBuffer = oReq.response;
-    if (arrayBuffer) {
-      sampleVideoData = new Uint8Array(arrayBuffer);
-    }
-  };
-
-  oReq.send(null);
-}
-*/
 
 
 
@@ -391,5 +359,39 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
+
+/*
+function retrieveSampleImage() {
+  var oReq = new XMLHttpRequest();
+  oReq.open("GET", "bigbuckbunny.jpg", true);
+  oReq.responseType = "arraybuffer";
+
+  oReq.onload = function (oEvent) {
+    var arrayBuffer = oReq.response;
+    if (arrayBuffer) {
+      sampleImageData = new Uint8Array(arrayBuffer);
+    }
+  };
+
+  oReq.send(null);
+}
+*/
+
+/*
+function retrieveSampleVideo() {
+  var oReq = new XMLHttpRequest();
+  oReq.open("GET", "bigbuckbunny.webm", true);
+  oReq.responseType = "arraybuffer";
+
+  oReq.onload = function (oEvent) {
+    var arrayBuffer = oReq.response;
+    if (arrayBuffer) {
+      sampleVideoData = new Uint8Array(arrayBuffer);
+    }
+  };
+
+  oReq.send(null);
+}
+*/
 </script>
 </body>
