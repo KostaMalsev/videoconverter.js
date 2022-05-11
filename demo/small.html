@@ -308,11 +308,13 @@ function initWorker() {
       
       if (message.type == "start") 
         console.log("Worker has received command\n");
-    
-    }
       
+      if (message.type == "stdout") 
+        console.log(message.data + "\n");
     }
-    
+
+  }
+  
  // });
 
   
@@ -325,11 +327,7 @@ function initWorker() {
       
       //outputElement.textContent += message.data + "\n";
     
-    } else if (message.type == "start") {
-      
-      outputElement.textContent = "Worker has received command\n";
-    
-    } else */
+    } 
   };
 }
 
