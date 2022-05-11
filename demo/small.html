@@ -154,7 +154,11 @@ function retreiveVideo(blob) {
 }
 
 
+
+
+
 console.log('Loading worker');
+let workerInitPromise=null;
 
 initWorker();
 
@@ -163,7 +167,6 @@ initWorker();
 function initWorker() {
   
   
-    
   worker = new Worker("worker-asm.js");
   
   //Create a mutex wait on load: 
@@ -214,7 +217,7 @@ function initWorker() {
   }
 
 
-let workerInitPromise=null;
+
 
 async function runCommand(text) {
   
