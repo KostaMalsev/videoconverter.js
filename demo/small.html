@@ -193,9 +193,10 @@ function initWorker() {
           
           var buffers = message.data;
           
-          if (buffers.length) {
+          /*if (buffers.length) {
             outputElement.className = "closed";
-          }
+          }*/
+          button.innerHTML = 'Press to Convert';
           
           buffers.forEach(function(file) {
             
