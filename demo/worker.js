@@ -54,6 +54,8 @@ onmessage = function(event) {
   }
 };
 
+console.log('Worker is ready');
+
 postMessage({
   'type' : 'ready'
 });
