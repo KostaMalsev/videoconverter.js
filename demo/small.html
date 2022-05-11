@@ -74,14 +74,14 @@ function isReady() {
 
 
 
-
-
+document.querySelector('#run').addEventListener('click',runCommand)
 
 //Image loader:
 window.addEventListener('load', async function() {
   
   
   document.querySelector('input[type="file"]').addEventListener('change', async function() {
+    
       if (this.files && this.files[0]) {
           var img = document.querySelector('img');
           
@@ -91,37 +91,31 @@ window.addEventListener('load', async function() {
 
           img.src = URL.createObjectURL(this.files[0]); // set src to blob url
           
-          
-          //Generate blob from the image url:
           let blob = await fetch(img.src).then(r => r.blob());
 
-          //Push the data to array format:
+          console.log(blob)
           retreiveImage(blob);
           
+          console.log(sampleImageData)
       }
   });
-  
-  
   
   const videoSrc = document.querySelector("#video-source");
   const videoTag = document.querySelector("#video-tag");
   const inputTag = document.querySelector("#input-tag");
   
-  
-  
-  inputTag.addEventListener('change',  readVideo)
+  inputTag.addEventListener('change',  readVideo);
 
 
 
-  
-  function readVideo(event) {
+//Read video from url
+function readVideo(event) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
   
       reader.onload = function(e) {
-        videoSrc.src = e.target.result;
-        videoTag.load();
-        
+        videoSrc.src = e.target.result
+        videoTag.load()
       }.bind(this)
   
       reader.readAsDataURL(event.target.files[0]);
@@ -131,14 +125,28 @@ window.addEventListener('load', async function() {
 });
 
 
-//Function pushes blob to arrayBuffer:
+//Push blob to arrayBuffer of image
 function retreiveImage(blob) {
 
   var fileReader = new FileReader();
   
   fileReader.onload = function(event) {
-    sampleImageData = event.target.result;
-    console.log('ImageData:',sampleImageData);
+    sampleImageData = new Uint8Array(event.target.result);
+  };
+  
+  fileReader.readAsArrayBuffer(blob);
+  
+}
+
+//Push blob to arrayBuffer of video
+function retreiveVideo(blob) {
+
+  var fileReader = new FileReader();
+  
+  fileReader.onload = function(event) {
+    
+    sampleVideoData = new Uint8Array(event.target.result);
+    
   };
   
   fileReader.readAsArrayBuffer(blob);
@@ -146,96 +154,34 @@ function retreiveImage(blob) {
 }
 
 
-/*
-function retrieveImage(url) {
+console.log('Loading worker');
+initWorker();
+
+
+let workerInitPromise;
+
+async function runCommand(text) {
   
-  var oReq = new XMLHttpRequest();
-  oReq.open("GET", url, true);
-  oReq.responseType = "arraybuffer";
+  text = '-t 5 -i input.webm -vf showinfo -strict -2 output.gif';
+  
+  if (workerInitPromise) {
+    
+    console.log('Before init');
 
-  oReq.onload = function (oEvent) {
-    var arrayBuffer = oReq.response;
-    if (arrayBuffer) {
-      sampleImageData = new Uint8Array(arrayBuffer);
-    }
-  };
-
-  oReq.send(null);
-}
-*/
-
-
-
-function startRunning() {
-  //document.querySelector("#image-loader").style.visibility = "visible";
-  //outputElement.className = "";
-  //filesElement.innerHTML = "";
-  running = true;
-}
-
-
-
-function stopRunning() {
-  //document.querySelector("#image-loader").style.visibility = "hidden";
-  running = false;
-}
-
-function retrieveSampleImage() {
-  var oReq = new XMLHttpRequest();
-  oReq.open("GET", "bigbuckbunny.jpg", true);
-  oReq.responseType = "arraybuffer";
-
-  oReq.onload = function (oEvent) {
-    var arrayBuffer = oReq.response;
-    if (arrayBuffer) {
-      sampleImageData = new Uint8Array(arrayBuffer);
-    }
-  };
-
-  oReq.send(null);
-}
-
-
-
-function retrieveSampleVideo() {
-  var oReq = new XMLHttpRequest();
-  oReq.open("GET", "bigbuckbunny.webm", true);
-  oReq.responseType = "arraybuffer";
-
-  oReq.onload = function (oEvent) {
-    var arrayBuffer = oReq.response;
-    if (arrayBuffer) {
-      sampleVideoData = new Uint8Array(arrayBuffer);
-    }
-  };
-
-  oReq.send(null);
-}
-
-
-
-
-function parseArguments(text) {
-  text = text.replace(/\s+/g, ' ');
-  var args = [];
-  // Allow double quotes to not split args.
-  text.split('"').forEach(function(t, i) {
-    t = t.trim();
-    if ((i % 2) === 1) {
-      args.push(t);
-    } else {
-      args = args.concat(t.split(" "));
-    }
-  });
-  return args;
-}
-
-
-function runCommand(text) {
+    await workerInitPromise;
+    
+    console.log('After init');
+    
+  }
+  
+  
   if (isReady()) {
+    
     startRunning();
+    
     var args = parseArguments(text);
     console.log(args);
+    
     worker.postMessage({
       type: "command",
       arguments: args,
@@ -255,8 +201,81 @@ function runCommand(text) {
 }
 
 
+
+function startRunning() {
+  //document.querySelector("#image-loader").style.visibility = "visible";
+  //outputElement.className = "";
+  //filesElement.innerHTML = "";
+  running = true;
+}
+
+
+
+function stopRunning() {
+  //document.querySelector("#image-loader").style.visibility = "hidden";
+  running = false;
+}
+
+
+/*
+function retrieveSampleImage() {
+  var oReq = new XMLHttpRequest();
+  oReq.open("GET", "bigbuckbunny.jpg", true);
+  oReq.responseType = "arraybuffer";
+
+  oReq.onload = function (oEvent) {
+    var arrayBuffer = oReq.response;
+    if (arrayBuffer) {
+      sampleImageData = new Uint8Array(arrayBuffer);
+    }
+  };
+
+  oReq.send(null);
+}
+*/
+
+/*
+function retrieveSampleVideo() {
+  var oReq = new XMLHttpRequest();
+  oReq.open("GET", "bigbuckbunny.webm", true);
+  oReq.responseType = "arraybuffer";
+
+  oReq.onload = function (oEvent) {
+    var arrayBuffer = oReq.response;
+    if (arrayBuffer) {
+      sampleVideoData = new Uint8Array(arrayBuffer);
+    }
+  };
+
+  oReq.send(null);
+}
+*/
+
+
+
+function parseArguments(text) {
+  
+  text = text.replace(/\s+/g, ' ');
+  var args = [];
+  // Allow double quotes to not split args.
+  text.split('"').forEach(function(t, i) {
+    t = t.trim();
+    if ((i % 2) === 1) {
+      args.push(t);
+    } else {
+      args = args.concat(t.split(" "));
+    }
+  });
+  return args;
+}
+
+
+
+
 function getDownloadLink(fileData, fileName) {
+  
   if (fileName.match(/\.jpeg|\.gif|\.jpg|\.png/)) {
+    
     var blob = new Blob([fileData]);
     var src = window.URL.createObjectURL(blob);
     var img = document.createElement('img');
@@ -279,16 +298,56 @@ function getDownloadLink(fileData, fileName) {
 
 function initWorker() {
   
+  
   worker = new Worker("worker-asm.js");
-  worker.onmessage = function (event) {
-    var message = event.data;
-    if (message.type == "ready") {
-      isWorkerLoaded = true;
-      worker.postMessage({
-        type: "command",
-        arguments: ["-help"]
-      });
-    } else if (message.type == "stdout") {
+  
+  //workerInitPromise = new Promise(resolve => {
+  
+    worker.onmessage = function (event) {
+      
+      const message = event.data;
+      
+      console.log('Received message:',message.type)
+      
+      if (message.type == "ready") {
+        
+        console.log('Worker is ready');
+        
+        isWorkerLoaded = true;
+        
+        resolve();
+        
+      }
+      
+      if (message.type == "done") {
+      
+          //stopRunning();
+          console.log('worker has finished')
+          
+          var buffers = message.data;
+          
+          if (buffers.length) {
+            outputElement.className = "closed";
+          }
+          
+          buffers.forEach(function(file) {
+            
+            filesElement.appendChild(getDownloadLink(file.data, file.name));
+            
+          });
+      }
+      
+    }
+    
+ // });
+
+  
+  
+  /*worker.onmessage = function (event) {
+    
+    const message = event.data;
+      
+    if (message.type == "stdout") {
       
       //outputElement.textContent += message.data + "\n";
     
@@ -296,19 +355,7 @@ function initWorker() {
       
       outputElement.textContent = "Worker has received command\n";
     
-    } else if (message.type == "done") {
-      
-      stopRunning();
-      var buffers = message.data;
-      
-      if (buffers.length) {
-        outputElement.className = "closed";
-      }
-      
-      buffers.forEach(function(file) {
-        filesElement.appendChild(getDownloadLink(file.data, file.name));
-      });
-    }
+    } else */
   };
 }
 
@@ -327,17 +374,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
   inputElement.addEventListener("keydown", function(e) {
     if (e.keyCode === 13) {
-      runCommand(inputElement.value);
+      //runCommand(inputElement.value);
     }
   }, false);
   document.querySelector("#run").addEventListener("click", function() {
-    runCommand(inputElement.value);
+    //runCommand(inputElement.value);
   });
 
   [].forEach.call(document.querySelectorAll(".sample"), function(link) {
     link.addEventListener("click", function(e) {
       inputElement.value = this.getAttribute("data-command");
-      runCommand(inputElement.value);
+      //runCommand(inputElement.value);
       e.preventDefault();
     });
   });
