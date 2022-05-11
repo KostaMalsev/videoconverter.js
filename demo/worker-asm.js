@@ -1,6 +1,6 @@
 console.log('inside worker')
 
-importScripts('../build/ffmpeg-all-codecs.js');
+//importScripts('../build/ffmpeg-all-codecs.js');
 
 var now = Date.now;
 
