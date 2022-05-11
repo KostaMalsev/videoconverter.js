@@ -183,6 +183,9 @@ function initWorker() {
         
         console.log('Worker is ready');
         
+        button.classList.remove("gray");
+        button.classList.remove("disabled");
+        
         isWorkerLoaded = true;
         //Create a mutex wait on load: 
          workerInitPromise = new Promise(resolve => {
