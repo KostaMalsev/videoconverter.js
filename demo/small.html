@@ -217,15 +217,10 @@ async function runCommand(text) {
   //text = '-t 5 -i input.webm -vf showinfo -strict -2 output.gif';
   text = '-i input.gif -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4'
 
-  if (workerInitPromise) {
-
-    console.log('Before init');
-    
+  if (workerInitPromise) {    
 
     await workerInitPromise;
-
-    console.log('After init');
-
+    
 
     if (isReady()) {
 
