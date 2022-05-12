@@ -18,16 +18,16 @@
 
     <div class="subtitle">Upload image file</div>
 
-    <input type='file'/> <br> 
+    <input type='file' multiple/> <br> 
     <img id="myImg" src="#">
     
     <div class="subtitle">Upload video file</div>
 
-    <input type="file" accept="video/*" id="input-tag"/>
+    <input type="file" accept="video/*" id="input-tag" multiple/>
     <hr>
     
     <figure id="videoContainer">
-      <video controls id="video-tag">
+      <video controls id="video-tag" style="height:100px;">
         <source id="video-source" src="splashVideo">
         Your browser does not support the video tag.
       </video>
