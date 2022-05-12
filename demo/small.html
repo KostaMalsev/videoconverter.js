@@ -80,6 +80,11 @@ function isReady() {
 
 //Attach run command to convert button
 document.querySelector('#run').addEventListener('click',convertGifToMp4);
+vFigure.style.visibility = "hidden";
+//vFigure.style.visibility = "visible";	
+
+//Attache read video to video loaer tag
+inputTag.addEventListener('change',  readVideo);
 
 
 
@@ -109,7 +114,6 @@ window.addEventListener('load', async function() {
   
   
   
-inputTag.addEventListener('change',  readVideo);
 
 
 
