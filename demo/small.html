@@ -298,7 +298,8 @@ async function convertGifToMp4()
 //Convert gif to mp4 264 format video:
 async function convertVideo2Gif()
 {
-  await runCommand('-i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos" -c:v pam -f image2pipe - | convert -delay 10 - -loop 0 -layers optimize output.gif');
+  //await runCommand('-i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos" -c:v pam -f image2pipe - | convert -delay 10 - -loop 0 -layers optimize output.gif');
+  await runCommand('-ss 30 -t 3 -i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 output.gif');
 }
 
 //Convert webm video to gif:
