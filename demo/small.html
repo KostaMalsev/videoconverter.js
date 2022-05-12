@@ -45,6 +45,15 @@ var filesElement;
 var running = false;
 var isWorkerLoaded = false;
 
+
+
+
+const videoSrc = document.querySelector("#video-source");
+const videoTag = document.querySelector("#video-tag");
+const inputTag = document.querySelector("#input-tag");
+  
+  
+  
 let button = document.querySelector(".button");
 
 var isSupported = (function() {
@@ -89,9 +98,7 @@ window.addEventListener('load', async function() {
       }
   });
   
-  const videoSrc = document.querySelector("#video-source");
-  const videoTag = document.querySelector("#video-tag");
-  const inputTag = document.querySelector("#input-tag");
+  
   
   inputTag.addEventListener('change',  readVideo);
 
@@ -345,7 +352,7 @@ function getDownloadLink(fileData, fileName) {
 
       var a = document.createElement('a');
 
-      a.addClassList('button');
+      a.classList.add('button');
 
       a.download = fileName;
       var blob = new Blob([fileData]);
