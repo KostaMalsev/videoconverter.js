@@ -208,28 +208,21 @@ function initWorker() {
           
           var buffers = message.data;
           
-          /*if (buffers.length) {
-            outputElement.className = "closed";
-          }*/
           button.innerHTML = 'Press to Convert';
-          
-          //console.log(buffers[0].data)
-          
+                    
           var blob_ = new Blob([buffers[0].data]);
-          //console.log(blob_);
           
           let video_ = document.querySelector('#video-source');
           console.log(video_)
           
-          //Play the video:
-          video_.src = URL.createObjectURL(blob_);
-          //video_.src({type:'video/mp4', src: URL.createObjectURL(blob_)});
           
+          //Generate the downloadable link:
           buffers.forEach(function(file) {
             
             filesElement.appendChild(getDownloadLink(file.data, file.name));
             
           });
+          
           stopRunning();
       }
       
