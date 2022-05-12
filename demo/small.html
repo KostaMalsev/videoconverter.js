@@ -16,25 +16,28 @@
 
     <div class="subtitle" id='log'> </div>
 
-    <div class="subtitle">Upload image file</div>
 
-    <input type='file' multiple/> <br> 
-    <img id="myImg" src="#">
-    
-    <div class="subtitle">Upload video file</div>
+		<div class="button-wrapper">
+		
+	    <input type="file" accept="video/*" id="input-tag" multiple/>
+			<label for="input-tag">
+				<div class="button">Video to GIF</div>
+		  </label>
+	
+	    <input type="file" accept="image/gif" id="image-upload" multiple/>
+			<label for="image-upload">
+				<div class="button">GIF to video</div>
+		  </label>
+		
+		</div>
+	
+ 		<br> 
 
-    <input type="file" accept="video/*" id="input-tag" multiple/>
-    <hr>
+    <img id="myImg">
     
-    <figure id="videoContainer">
-      <video controls id="video-tag" style="height:100px;display:none">
-        <source id="video-source" src="splashVideo">
-        Your browser does not support the video tag.
-      </video>
-    </figure>
-    
+    <video controls id="video-tag" style="height:100px;display:none"></video>
 
-    <div class="button" id="run">Convert</div>
+    <div class="button convert-button hidden">Convert</div>
     <br> </br>
     <div id="files"></div>
 
@@ -54,13 +57,14 @@ var isWorkerLoaded = false;
 
 
 //Link to html elements:
+const imageUploadButton = document.querySelector('#image-upload');
 const videoSrc = document.querySelector("#video-source");
 const videoTag = document.querySelector("#video-tag");
 const inputTag = document.querySelector("#input-tag");
 const log= document.querySelector('#log');  
 const vFigure = document.querySelector('#videoContainer');  
   
-let button = document.querySelector("#run");
+let button = document.querySelector(".convert-button");
 
 
 let command = "";
@@ -86,17 +90,12 @@ function isReady() {
 //vFigure.style.visibility = "hidden";
 
 
-//Set button defaults:
-button.classList.add('gray');
-button.classList.add("disabled");
-
-
 
 //Image loader:
 window.addEventListener('load', async function() {
   
   
-  document.querySelector('input[type="file"]').addEventListener('change', async function() {
+  imageUploadButton.addEventListener('change', async function() {
     
       if (this.files && this.files[0]) {
           var img = document.querySelector('img');
@@ -113,9 +112,10 @@ window.addEventListener('load', async function() {
           //Convert image to buffer Array:
           retreiveImage(blob);
           
+					// show convert button
+          button.classList.remove('hidden');
+
           //Set to convert gif to video:
-          button.classList.remove('gray');
-          button.classList.remove("disabled");
           button.removeEventListener('click',convertVideo2Gif);
           button.removeEventListener('click',convertGifToMp4);
 
@@ -158,15 +158,14 @@ async function readVideo(event) {
     }
     
     
-    //Set to convert gif to video:
-    button.classList.remove('gray');
-    button.classList.remove("disabled");
+    // show convert button
+    button.classList.remove('hidden');
+
     //Attach run command to convert button
     button.removeEventListener('click',convertVideo2Gif);
     button.removeEventListener('click',convertGifToMp4);
     
     button.addEventListener('click',convertVideo2Gif);
-    //vFigure.style.visibility = "visible";	
 
   }
   
@@ -219,9 +218,10 @@ function initWorker() {
   
   worker = new Worker("worker-asm.js");
   
+	button.classList.remove("hidden");
   button.classList.add("gray");
   button.classList.add("disabled");
-  button.innerHTML = 'Loading engine'
+  button.innerText = 'Loading engine';
   
   filesElement = document.querySelector("#files");
 
@@ -239,7 +239,7 @@ function initWorker() {
         
         button.classList.remove("gray");
         button.classList.remove("disabled");
-        button.innerHTML = 'Press to Convert'
+        button.innerHTML = 'Press to Convert';
 
         
         isWorkerLoaded = true;
