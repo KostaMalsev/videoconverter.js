@@ -321,6 +321,7 @@ function parseArguments(text) {
 }
 
 
+let tmpBlob=null;
 
 //Generate downloadable link
 function getDownloadLink(fileData, fileName) {
@@ -347,6 +348,8 @@ function getDownloadLink(fileData, fileName) {
       }.bind(this)
   
       var blob = new Blob([fileData]);
+      tmpBlob = blob;
+      
       console.log('Playing the output:',blob);
       reader.readAsDataURL(blob);
     }
