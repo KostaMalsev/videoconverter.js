@@ -294,7 +294,7 @@ async function convertVideo2Gif()
 //Convert webm video to gif:
 async function convertGifToWebm()
 {
-  await runCommand(''-t 5 -i input.webm -vf showinfo -strict -2 output.gif'');
+  await runCommand('-t 5 -i input.webm -vf showinfo -strict -2 output.gif');
 }
 
 
