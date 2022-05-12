@@ -26,12 +26,12 @@
     <input type="file" accept="video/*" id="input-tag"/>
     <hr>
     
-    <!--<figure id="videoContainer">-->
+    <figure id="videoContainer">
       <video controls id="video-tag">
         <source id="video-source" src="splashVideo">
         Your browser does not support the video tag.
       </video>
-    <!--</figure>-->
+    </figure>
     
 
     <div class="button" id="run">Convert</div>
@@ -80,7 +80,7 @@ function isReady() {
 
 //Attach run command to convert button
 document.querySelector('#run').addEventListener('click',convertGifToMp4);
-//vFigure.style.visibility = "hidden";
+vFigure.style.visibility = "hidden";
 //vFigure.style.visibility = "visible";	
 
 //Attache read video to video loaer tag
