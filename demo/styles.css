@@ -15,6 +15,10 @@ input[type="file"] {
   display: none !important;
 }
 
+.button {
+  text-decoration: none;
+}
+
 
 body {
   margin: auto;
