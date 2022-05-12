@@ -33,7 +33,7 @@
 
 		<br>
 
-    <img id="image-tag">
+    <img id="img-tag">
     
     <video controls id="video-tag" class="hidden" style="height:100px"></video>
 
@@ -100,6 +100,8 @@ window.addEventListener('load', async function() {
   
   imageUploadButton.addEventListener('change', async function() {
     
+		if (videoDownloadLink) videoDownloadLink.remove();
+
       if (this.files && this.files[0]) {
           
           imgTag.onload = () => {
@@ -115,7 +117,7 @@ window.addEventListener('load', async function() {
           retreiveImage(blob);
           
 					// show convert button
-          button.classList.remove('hidden', 'disabled');
+          button.classList.remove('hidden', 'gray');
 
 					uploadButtons.classList.add('hidden');
 
@@ -138,6 +140,8 @@ inputTag.addEventListener('change',  readVideo);
 //Read video from url
 async function readVideo(event) {
   
+		if (videoDownloadLink) videoDownloadLink.remove();
+
     if (event.target.files && event.target.files[0]) {
 			
 			var srcResult = URL.createObjectURL(event.target.files[0]);
@@ -163,7 +167,7 @@ async function readVideo(event) {
     
     
     // show convert button
-    button.classList.remove('hidden', 'disabled');
+    button.classList.remove('hidden', 'gray');
 
     //Attach run command to convert button
     button.removeEventListener('click',convertVideo2Gif);
@@ -211,8 +215,7 @@ function retreiveVideo(file) {
 
 
 
-
-
+var videoDownloadLink;
 
 function initWorker() {
   
@@ -224,7 +227,6 @@ function initWorker() {
   
 	button.classList.remove("hidden");
   button.classList.add("gray");
-  button.classList.add("disabled");
   button.innerText = 'Loading engine...';
   
   filesElement = document.querySelector("#files");
@@ -261,6 +263,8 @@ function initWorker() {
 					button.classList.add("hidden");
 					
 					uploadButtons.classList.remove('hidden');
+					
+					imgTag.src = '';
 										
 					videoTag.src = '';
 					videoTag.classList.add('hidden');
@@ -279,7 +283,9 @@ function initWorker() {
           //Generate the downloadable link:
           buffers.forEach(function(file) {
             
-            filesElement.appendChild(getDownloadLink(file.data, file.name));
+						videoDownloadLink = getDownloadLink(file.data, file.name);
+
+            filesElement.appendChild(videoDownloadLink);
             
           });
           
@@ -439,7 +445,7 @@ function getDownloadLink(fileData, fileName) {
       var blob = new Blob([fileData]);
       var src = window.URL.createObjectURL(blob);
       a.href = src;
-      a.textContent = 'Download video';
+      a.textContent = 'Download result';
       return a;
   }
 }
