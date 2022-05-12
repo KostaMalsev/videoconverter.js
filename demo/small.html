@@ -178,7 +178,6 @@ function initWorker() {
   filesElement = document.querySelector("#files");
 
   
-  
   worker.onmessage = function (event) {
       
       const message = event.data;
@@ -196,6 +195,9 @@ function initWorker() {
 
         
         isWorkerLoaded = true;
+        
+        //Run the command:
+        runCommand("");
                 
       }
       
@@ -211,7 +213,6 @@ function initWorker() {
           var blob_ = new Blob([buffers[0].data]);
           
           let video_ = document.querySelector('#video-source');
-          console.log(video_)
           
           
           //Generate the downloadable link:
