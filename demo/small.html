@@ -167,6 +167,8 @@ function retreiveImage(blob) {
 
 function initWorker() {
   
+  if(isWorkerLoaded) return;
+  
   console.log('Start init worker')
   
   worker = new Worker("worker-asm.js");
