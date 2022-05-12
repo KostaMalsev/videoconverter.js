@@ -240,7 +240,7 @@ function initWorker() {
 
 
 let workerInitPromise=null;
-initWorker();
+
 
 async function runCommand(text) {
 
@@ -250,6 +250,7 @@ async function runCommand(text) {
 
   if (workerInitPromise) {    
 
+    initWorker();
     await workerInitPromise;
     
 
