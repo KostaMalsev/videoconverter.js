@@ -203,7 +203,7 @@ function initWorker() {
         isWorkerLoaded = true;
         
         //Run the command:
-        runCommand("");
+        runCommand(command);
                 
       }
       
@@ -249,15 +249,26 @@ function initFinished(resolve)
   if(isWorkerLoaded) resolve();
 }
 
+
+
+
+//Convert gif to mp4 264 format video:
+async function convertGifToMp4()
+{
+  await runCommand('-i input.gif -vf "crop=trunc(iw/2)*2:trunc(ih/2)*2" -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4');
+}
+
+
+
 async function runCommand(text) {
+  
+  command = text;
 
   //text = '-t 5 -i input.webm -vf showinfo -strict -2 output.gif';
   //text = '-i input.gif -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4'
-  text = '-i input.gif -vf "crop=trunc(iw/2)*2:trunc(ih/2)*2" -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4'
+  //text = '-i input.gif -vf "crop=trunc(iw/2)*2:trunc(ih/2)*2" -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4'
 
-    console.log('in runCommand')
-    //Create a mutex wait on load: 
-    
+    //Load engine if not yet loaded:    
     initWorker();
 
     if (isReady()) {
