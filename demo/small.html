@@ -147,10 +147,10 @@ async function readVideo(event) {
   
       //Generate blob from url:
       let blob = await fetch(videoSrc.src).then(r => r.blob());
-      console.log(blob)
+      console.log(event.target.files[0])
       
       //Convert image to buffer Array:
-      retreiveVideo(blob);
+      retreiveVideo(event.target.files[0]);
       
       reader.readAsDataURL(event.target.files[0]);
     }
@@ -188,7 +188,7 @@ function retreiveImage(blob) {
 
 
 //Push blob to arrayBuffer of video
-function retreiveVideo(blob) {
+function retreiveVideo(file) {
 
   var fileReader = new FileReader();
   
@@ -198,7 +198,7 @@ function retreiveVideo(blob) {
     
   };
   
-  fileReader.readAsArrayBuffer(blob);
+  fileReader.readAsArrayBuffer(file);
   
 }
 
