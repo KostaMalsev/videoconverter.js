@@ -92,12 +92,12 @@ window.addEventListener('load', async function() {
 
           img.src = URL.createObjectURL(this.files[0]); // set src to blob url
           
+          //Generate blob from url:
           let blob = await fetch(img.src).then(r => r.blob());
 
-          console.log(blob)
+          //Convert image to buffer Array:
           retreiveImage(blob);
           
-          console.log(sampleImageData)
       }
   });
   
