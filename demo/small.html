@@ -27,7 +27,7 @@
     <hr>
     
     <figure id="videoContainer">
-      <video controls id="video-tag" style="height:100px;">
+      <video controls id="video-tag" style="height:100px;display:none">
         <source id="video-source" src="splashVideo">
         Your browser does not support the video tag.
       </video>
@@ -140,6 +140,8 @@ async function readVideo(event) {
       reader.onload = function(e) {
         videoSrc.src = e.target.result
         videoTag.load();
+
+				videoTag.style.display = 'block';
         
         //sampleVideoData = new Uint8Array(e.target.result);
         
