@@ -35,7 +35,7 @@
     
 
     <div class="button" id="run">Convert</div>
-    <br> </br><br> </br>
+    <br> </br>
     <div id="files"></div>
 
 <script>
@@ -145,6 +145,12 @@ function readVideo(event) {
   
       reader.readAsDataURL(event.target.files[0]);
     }
+    
+    //Set to convert gif to video:
+    button.classList.remove('gray');
+    button.classList.remove("disabled");
+    //Attach run command to convert button
+    button.addEventListener('click',convertGifToMp4);
   }
   
 });
@@ -276,7 +282,11 @@ async function convertGifToMp4()
   await runCommand('-i input.gif -vf "crop=trunc(iw/2)*2:trunc(ih/2)*2" -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4');
 }
 
-
+//Convert gif to mp4 264 format video:
+async function convertVideo2Gif()
+{
+  await runCommand('-i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos" -c:v pam -f image2pipe - | convert -delay 10 - -loop 0 -layers optimize output.gif');
+}
 
 async function runCommand(text) {
   
@@ -305,7 +315,7 @@ async function runCommand(text) {
             "data": sampleImageData
           },
           {
-            "name": "input.webm",
+            "name": "input.mp4",
             "data": sampleVideoData
           }
         ]
