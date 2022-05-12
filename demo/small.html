@@ -79,13 +79,15 @@ function isReady() {
 }
 
 
-//Attach run command to convert button
-button.addEventListener('click',convertGifToMp4);
+
 
 vFigure.style.visibility = "hidden";
 //vFigure.style.visibility = "visible";	
 
-//Attache read video to video loaer tag
+
+//Set button defaults:
+button.classList.add('gray');
+button.classList.add("disabled");
 
 
 
@@ -109,6 +111,12 @@ window.addEventListener('load', async function() {
 
           //Convert image to buffer Array:
           retreiveImage(blob);
+          
+          //Set to convert gif to video:
+          button.classList.remove('gray');
+          button.classList.remove("disabled");
+          //Attach run command to convert button
+          button.addEventListener('click',convertGifToMp4);
           
       }
   });
