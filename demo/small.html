@@ -251,6 +251,12 @@ function initWorker() {
           
           let video_ = document.querySelector('#video-source');
           
+          //Check if conversion succeeded:
+          if(typeof(message.data) == 'undefined' ){
+            log.innerHTML = 'Failed to convert';
+            stopRunning();
+            return;
+          }
           
           //Generate the downloadable link:
           buffers.forEach(function(file) {
