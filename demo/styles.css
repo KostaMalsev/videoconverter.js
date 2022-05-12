@@ -19,6 +19,10 @@ input[type="file"] {
   text-decoration: none;
 }
 
+.button.gray {
+  pointer-events: none;
+}
+
 
 body {
   margin: auto;
