@@ -276,7 +276,7 @@ function initFinished(resolve)
 
 
 
-//Convert gif to mp4 264 format video:
+//Convert mp4 264 video to gif:
 async function convertGifToMp4()
 {
   await runCommand('-i input.gif -vf "crop=trunc(iw/2)*2:trunc(ih/2)*2" -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4');
@@ -288,6 +288,14 @@ async function convertVideo2Gif()
   await runCommand('-i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos" -c:v pam -f image2pipe - | convert -delay 10 - -loop 0 -layers optimize output.gif');
 }
 
+//Convert webm video to gif:
+async function convertGifToWebm()
+{
+  await runCommand(''-t 5 -i input.webm -vf showinfo -strict -2 output.gif'');
+}
+
+
+//Run the ffmpeg:
 async function runCommand(text) {
   
   command = text;
