@@ -66,13 +66,15 @@ let button = document.querySelector("#run");
 let command = "";
 
 
+
+//Check if worker is supported:
 var isSupported = (function() {
   return document.querySelector && window.URL && window.Worker;
 })();
 
 
 
-
+//Check if worker is ready to run:
 function isReady() {
   return !running && isWorkerLoaded;
   //return !running && isWorkerLoaded && sampleImageData && sampleVideoData;
@@ -80,7 +82,7 @@ function isReady() {
 
 
 
-
+//Set the defaults:
 vFigure.style.visibility = "hidden";
 //vFigure.style.visibility = "visible";	
 
