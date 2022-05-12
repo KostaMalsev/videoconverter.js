@@ -329,13 +329,13 @@ async function convertVideo2Gif()
   //await runCommand('-i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos" -c:v pam -f image2pipe - | convert -delay 10 - -loop 0 -layers optimize output.gif');
   //await runCommand('-ss 30 -t 3 -i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 output.gif');
   
-  //let cmnd = '-i input.mp4 -vf scale=320:-1:flags=lanczos,fps=15 outputfile.gif'; //works
+  let cmnd = '-i input.mp4 -vf scale=320:-1:flags=lanczos,fps=15 outputfile.gif'; //works
   
 	//let cmnd = '-i input.mp4 -vf scale=720:-1:flags=lanczos,fps=15 outputfile.gif';
 	
 	//Using pallete:
 	//let cmnd = '-i input.mp4 -vf fps=15,scale=320:-1:flags=lanczos, palettegen palette.png';
-  let cmnd = '-i input.mp4 -vf fps=16,scale=600:-2:flags=lanczos,split[s0][s1];[s0],palettegen=max_colors=128:reserve_transparent=0[p];[s1][p],paletteuse -y outputfile.gif';
+  //let cmnd = '-i input.mp4 -vf fps=16,scale=600:-2:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=128:reserve_transparent=0[p];[s1][p]paletteuse -y outputfile.gif';
   //let cmnd = `-i input.mp4 -vf scale=320:-1:flags=lanczos,fps=15,drawtext="text='Made with Codeit': fontcolor=black: x=160: y=-1" outputfile.gif`; //with watermark
   
   //let cmnd = '-i input.mp4 -i fps=30,scale=320:-1:flags=lanczos[x];[x][1:v]paletteuse output.gif'
