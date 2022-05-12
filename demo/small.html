@@ -334,7 +334,7 @@ async function convertVideo2Gif()
 	//let cmnd = '-i input.mp4 -vf scale=720:-1:flags=lanczos,fps=15 outputfile.gif';
 	
 	//Using pallete:
-	let cmnd = '-i input.mp4 -vf fps=15,scale=320:-1:flags=lanczos, palettegen -y palette.png';
+	let cmnd = '-i input.mp4 -vf fps=15,scale=320:-1:flags=lanczos, palettegen palette.png';
   
   //let cmnd = `-i input.mp4 -vf scale=320:-1:flags=lanczos,fps=15,drawtext="text='Made with Codeit': fontcolor=black: x=160: y=-1" outputfile.gif`; //with watermark
   
