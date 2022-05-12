@@ -309,7 +309,7 @@ async function convertVideo2Gif()
 {
   //await runCommand('-i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos" -c:v pam -f image2pipe - | convert -delay 10 - -loop 0 -layers optimize output.gif');
   //await runCommand('-ss 30 -t 3 -i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 output.gif');
-  let cmnd = '-i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos" -c:v pam -f image2pipe - | convert -delay 10 - -loop 0 -layers optimize output.gif';
+  let cmnd = '-i inputfile.mp4 -vf scale=320:-1:flags=lanczos,fps=15 outputfile.gif';
   //let cmnd = '-i input.mp4 -i palette.png -filter_complex "fps=30,scale=320:-1:flags=lanczos[x];[x][1:v]paletteuse" output.gif'
   
   await runCommand(cmnd);
