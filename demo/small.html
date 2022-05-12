@@ -67,7 +67,7 @@ var isSupported = (function() {
 
 
 function isReady() {
-  return !running;
+  return !running && isWorkerLoaded;
   //return !running && isWorkerLoaded && sampleImageData && sampleVideoData;
 }
 
@@ -103,7 +103,7 @@ window.addEventListener('load', async function() {
   
   
   
-  inputTag.addEventListener('change',  readVideo);
+inputTag.addEventListener('change',  readVideo);
 
 
 
@@ -237,6 +237,10 @@ function initWorker() {
 
 let workerInitPromise=null;
 
+function initFinished(resolve)
+{
+  if(isWorkerLoaded) resolve();
+}
 
 async function runCommand(text) {
 
@@ -244,19 +248,10 @@ async function runCommand(text) {
   //text = '-i input.gif -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4'
   text = '-i input.gif -vf "crop=trunc(iw/2)*2:trunc(ih/2)*2" -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4'
 
-    console.log('in runCommand',workerInitPromise)
+    console.log('in runCommand')
     //Create a mutex wait on load: 
     
-    
-  //if (workerInitPromise) {    
-
     initWorker();
-    //await workerInitPromise;
-    await new Promise(resolve => {
-        if(isWorkerLoaded){ console.log('promise resolved'); resolve();}
-    });
-    console.log('Finished init worker')
-
 
     if (isReady()) {
 
