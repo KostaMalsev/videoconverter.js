@@ -141,14 +141,19 @@ function readVideo(event) {
         videoSrc.src = e.target.result
         videoTag.load();
         
-        sampleVideoData = new Uint8Array(e.target.result);
+        //sampleVideoData = new Uint8Array(e.target.result);
         
-      }.bind(this)
+      }.bind(this);
   
-      console.log(sampleVideoData);
+      //Generate blob from url:
+      let blob = await fetch(videoSrc.src).then(r => r.blob());
+      
+      //Convert image to buffer Array:
+      retreiveVideo(blob);
       
       reader.readAsDataURL(event.target.files[0]);
     }
+    
     
     //Set to convert gif to video:
     button.classList.remove('gray');
