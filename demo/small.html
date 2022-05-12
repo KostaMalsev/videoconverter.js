@@ -347,6 +347,7 @@ function getDownloadLink(fileData, fileName) {
       }.bind(this)
   
       var blob = new Blob([fileData]);
+      console.log('Playing the output:',blob);
       reader.readAsDataURL(blob);
     }
 
