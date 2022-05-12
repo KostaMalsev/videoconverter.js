@@ -17,7 +17,7 @@
     <div class="subtitle" id='log'> </div>
 
 
-		<div class="button-wrapper">
+		<div class="button-wrapper upload-buttons">
 		
 	    <input type="file" accept="video/*" id="input-tag" multiple/>
 			<label for="input-tag">
@@ -30,15 +30,16 @@
 		  </label>
 		
 		</div>
-	
- 		<br> 
 
-    <img id="myImg">
+		<br>
+
+    <img id="image-tag">
     
-    <video controls id="video-tag" style="height:100px;display:none"></video>
+    <video controls id="video-tag" class="hidden" style="height:100px"></video>
+
+		<br>
 
     <div class="button convert-button hidden">Convert</div>
-    <br> </br>
     <div id="files"></div>
 
 <script>
@@ -57,12 +58,14 @@ var isWorkerLoaded = false;
 
 
 //Link to html elements:
+const uploadButtons = document.querySelector('.upload-buttons');
 const imageUploadButton = document.querySelector('#image-upload');
-const videoSrc = document.querySelector("#video-source");
 const videoTag = document.querySelector("#video-tag");
 const inputTag = document.querySelector("#input-tag");
 const log= document.querySelector('#log');  
 const vFigure = document.querySelector('#videoContainer');  
+const imgTag = document.querySelector('#img-tag');
+
   
 let button = document.querySelector(".convert-button");
 
@@ -98,22 +101,23 @@ window.addEventListener('load', async function() {
   imageUploadButton.addEventListener('change', async function() {
     
       if (this.files && this.files[0]) {
-          var img = document.querySelector('img');
           
-          img.onload = () => {
-              URL.revokeObjectURL(img.src);  // no longer needed, free memory
+          imgTag.onload = () => {
+            URL.revokeObjectURL(imgTag.src);  // no longer needed, free memory
           }
 
-          img.src = URL.createObjectURL(this.files[0]); // set src to blob url
+          imgTag.src = URL.createObjectURL(this.files[0]); // set src to blob url
           
           //Generate blob from url:
-          let blob = await fetch(img.src).then(r => r.blob());
+          let blob = await fetch(imgTag.src).then(r => r.blob());
 
           //Convert image to buffer Array:
           retreiveImage(blob);
           
 					// show convert button
-          button.classList.remove('hidden');
+          button.classList.remove('hidden', 'disabled');
+
+					uploadButtons.classList.add('hidden');
 
           //Set to convert gif to video:
           button.removeEventListener('click',convertVideo2Gif);
@@ -135,31 +139,31 @@ inputTag.addEventListener('change',  readVideo);
 async function readVideo(event) {
   
     if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-  
-      reader.onload = function(e) {
-        videoSrc.src = e.target.result
-        videoTag.load();
-
-				videoTag.style.display = 'block';
-        
-        //sampleVideoData = new Uint8Array(e.target.result);
-        
-      }.bind(this);
+			
+			var srcResult = URL.createObjectURL(event.target.files[0]);
+			
+			videoTag.onload = () => {
+      	URL.revokeObjectURL(srcResult);  // no longer needed, free memory
+      }
+	
+			videoTag.src = srcResult;
+			
+			videoTag.classList.remove('hidden');
   
       //Generate blob from url:
-      let blob = await fetch(videoSrc.src).then(r => r.blob());
-      console.log(event.target.files[0])
+      let blob = await fetch(srcResult).then(r => r.blob());
       
       //Convert image to buffer Array:
       retreiveVideo(event.target.files[0]);
-      
-      reader.readAsDataURL(event.target.files[0]);
+
     }
+
+
+		uploadButtons.classList.add('hidden');
     
     
     // show convert button
-    button.classList.remove('hidden');
+    button.classList.remove('hidden', 'disabled');
 
     //Attach run command to convert button
     button.removeEventListener('click',convertVideo2Gif);
@@ -221,7 +225,7 @@ function initWorker() {
 	button.classList.remove("hidden");
   button.classList.add("gray");
   button.classList.add("disabled");
-  button.innerText = 'Loading engine';
+  button.innerText = 'Loading engine...';
   
   filesElement = document.querySelector("#files");
 
@@ -236,11 +240,8 @@ function initWorker() {
       if (message.type == "ready") {
         
         console.log('Worker is ready');
-        
-        button.classList.remove("gray");
-        button.classList.remove("disabled");
-        button.innerHTML = 'Press to Convert';
 
+				button.innerText = 'Converting...';
         
         isWorkerLoaded = true;
         
@@ -256,7 +257,13 @@ function initWorker() {
           
           var buffers = message.data;
           
-          button.innerHTML = 'Press to Convert';
+          button.innerHTML = 'Convert';
+					button.classList.add("hidden");
+					
+					uploadButtons.classList.remove('hidden');
+										
+					videoTag.src = '';
+					videoTag.classList.add('hidden');
                     
           //var blob_ = new Blob([buffers[0].data]);
           
@@ -277,6 +284,9 @@ function initWorker() {
           });
           
           stopRunning();
+
+					log.innerText = '';
+
       }
       
       if (message.type == "start") 
@@ -371,7 +381,7 @@ function startRunning() {
   //document.querySelector("#image-loader").style.visibility = "visible";
   //outputElement.className = "";
   //filesElement.innerHTML = "";
-  button.innerHTML = 'Conversion in progress';
+  button.innerHTML = 'Converting...';
   running = true;
 }
 
@@ -379,7 +389,7 @@ function startRunning() {
 
 function stopRunning() {
   //document.querySelector("#image-loader").style.visibility = "hidden";
-  button.innerHTML = 'Press to Convert';
+  button.innerHTML = 'Convert';
   running = false;
 }
 
@@ -429,7 +439,7 @@ function getDownloadLink(fileData, fileName) {
       var blob = new Blob([fileData]);
       var src = window.URL.createObjectURL(blob);
       a.href = src;
-      a.textContent = 'Download ' + fileName + "!";
+      a.textContent = 'Download video';
       return a;
   }
 }
@@ -486,7 +496,7 @@ function retrieveSampleImage() {
   oReq.onload = function (oEvent) {
     var arrayBuffer = oReq.response;
     if (arrayBuffer) {
-      sampleImageData = new Uint8Array(arrayBuffer);
+	      sampleImageData = new Uint8Array(arrayBuffer);
     }
   };
 
