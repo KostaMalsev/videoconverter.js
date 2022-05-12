@@ -1,5 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+
+
+input[type="file"] {
+  display: none;
+}
+
+.button-wrapper {
+  display: flex;
+  grid-gap: 15px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
 body {
   margin: auto;
   color: #d4d5d7;
