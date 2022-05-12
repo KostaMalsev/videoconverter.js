@@ -117,6 +117,8 @@ window.addEventListener('load', async function() {
           //Set to convert gif to video:
           button.classList.remove('gray');
           button.classList.remove("disabled");
+          button.removeEventListener('click')
+
           //Attach run command to convert button
           button.addEventListener('click',convertGifToMp4);
           
@@ -139,7 +141,7 @@ function readVideo(event) {
         videoSrc.src = e.target.result
         videoTag.load();
         
-        sampleVideoData = new Uint8Array(e.target.result);
+        //sampleVideoData = new Uint8Array(e.target.result);
         
       }.bind(this)
   
@@ -150,6 +152,7 @@ function readVideo(event) {
     button.classList.remove('gray');
     button.classList.remove("disabled");
     //Attach run command to convert button
+    button.removeEventListener('click')
     button.addEventListener('click',convertVideo2Gif);
   }
   
