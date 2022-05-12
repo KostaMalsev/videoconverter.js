@@ -174,8 +174,6 @@ function retreiveImage(blob) {
     sampleImageData = new Uint8Array(event.target.result);
   };
   
-  console.log(sampleImageData);
-
   fileReader.readAsArrayBuffer(blob);
   
 }
