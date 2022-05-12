@@ -167,6 +167,7 @@ function retreiveImage(blob) {
 
 function initWorker() {
   
+  console.log('Start init worker')
   
   worker = new Worker("worker-asm.js");
   
@@ -248,11 +249,14 @@ async function runCommand(text) {
   //text = '-i input.gif -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4'
   text = '-i input.gif -vf "crop=trunc(iw/2)*2:trunc(ih/2)*2" -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4'
 
+    console.log('in runCommand')
+
   if (workerInitPromise) {    
 
     initWorker();
     await workerInitPromise;
-    
+    console.log('Finished init worker')
+
 
     if (isReady()) {
 
