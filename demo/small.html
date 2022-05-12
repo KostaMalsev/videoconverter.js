@@ -246,14 +246,15 @@ async function runCommand(text) {
 
     console.log('in runCommand',workerInitPromise)
     //Create a mutex wait on load: 
-    workerInitPromise = new Promise(resolve => {
-        if(isWorkerLoaded){ console.log('promise resolved'); resolve();}
-    });
     
-  if (workerInitPromise) {    
+    
+  //if (workerInitPromise) {    
 
     initWorker();
-    await workerInitPromise;
+    //await workerInitPromise;
+    await new Promise(resolve => {
+        if(isWorkerLoaded){ console.log('promise resolved'); resolve();}
+    });
     console.log('Finished init worker')
 
 
@@ -280,7 +281,6 @@ async function runCommand(text) {
 
       });
     }
-  }
 }
 
 
