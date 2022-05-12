@@ -299,7 +299,9 @@ async function convertGifToMp4()
 async function convertVideo2Gif()
 {
   //await runCommand('-i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos" -c:v pam -f image2pipe - | convert -delay 10 - -loop 0 -layers optimize output.gif');
-  await runCommand('-ss 30 -t 3 -i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 output.gif');
+  //await runCommand('-ss 30 -t 3 -i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 output.gif');
+  let cmnd = '-i input.mp4 -i palette.png -filter_complex "fps=30,scale=320:-1:flags=lanczos[x];[x][1:v]paletteuse" output.gif'
+  await runCommand(cmnd);
 }
 
 //Convert webm video to gif:
@@ -317,6 +319,7 @@ async function runCommand(text) {
   //text = '-t 5 -i input.webm -vf showinfo -strict -2 output.gif';
   //text = '-i input.gif -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4'
   //text = '-i input.gif -vf "crop=trunc(iw/2)*2:trunc(ih/2)*2" -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4'
+
 
     //Load engine if not yet loaded:    
     initWorker();
