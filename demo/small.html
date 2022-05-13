@@ -355,11 +355,6 @@ async function runCommand(text) {
   
   command = text;
 
-  //text = '-t 5 -i input.webm -vf showinfo -strict -2 output.gif';
-  //text = '-i input.gif -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4'
-  //text = '-i input.gif -vf "crop=trunc(iw/2)*2:trunc(ih/2)*2" -b:v 0 -crf 25 -f mp4 -vcodec libx264 -pix_fmt yuv420p output.mp4'
-
-
     //Load engine if not yet loaded:    
     initWorker();
 
